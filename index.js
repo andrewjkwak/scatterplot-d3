@@ -74,7 +74,14 @@ const createGraph = async (x, y) => {
 
   const xAxis = bounds.append("g")
     .call(xAxisGenerator)
-    .style("transform", `translateY(${dimensions.boundedHeight}px)`);
+      .style("transform", `translateY(${dimensions.boundedHeight}px)`);
+
+  const xAxisLabel = xAxis.append("text")
+      .attr("x", dimensions.boundedWidth / 2)
+      .attr("y", dimensions.marginBottom - 10)
+      .attr("fill", "black")
+      .style("font-size", "12px")
+      .text(x);
 
   const yAxisGenerator = d3.axisLeft()
     .scale(yScale)
@@ -82,6 +89,15 @@ const createGraph = async (x, y) => {
   
   const yAxis = bounds.append("g")
     .call(yAxisGenerator);
+
+  const yAxisLabel = yAxis.append("text")
+      .attr("x", -dimensions.boundedHeight / 2)
+      .attr("y", -dimensions.marginRight - 25)
+      .attr("fill", "black")
+      .style("font-size", "12px")
+      .style("transform", `rotate(-90deg)`)
+      .style("text-anchor", "middle")
+      .text(y)
 
   // 7. Add interactions
   const delaunay = d3.Delaunay.from(
